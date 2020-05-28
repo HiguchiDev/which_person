@@ -1,0 +1,37 @@
+<div class="row pt-3 pb-3 border-top">
+    <div class="col">
+        <div class="row">
+            <div class="col">
+                ユーザ名：
+                <span id="user_name"></span>
+            </div>
+        </div>
+
+        <div class="row pt-1">
+
+            <div class="col-2">
+                選択肢　:　<span class="col-1 rounded-lg" id="choice_color"></span>
+            </div>
+
+            <div class="col-9">
+            </div>
+        </div>
+
+        <div class="row pt-2">
+            <div class="col">
+                <span id="comment_txt"></span>
+            </div>
+        </div>
+
+        <div class="row pt-2">
+            <div class="col" id="delete_button">
+                <form id="comment_delete_form" name="comment_cancel_form" class="comment_cancel_form" action=""
+                      method="POST">
+                    <input id="csrf_token" type="hidden" name="csrfmiddlewaretoken" value="">
+                    <input id="form_comment_id" type="hidden" type="text" name="comment_id" value="">
+                    <input class="comment_btn" type="submit" value="削除">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

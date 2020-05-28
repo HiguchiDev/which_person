@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <body>
+    {% if user.id  %}
+    <p>ログインしました．</p>
+    <p>こんにちは，{{ user.username }}さん</p>
+    <a href="{% url 'accounts:account_logout' %}">ログアウトする</a>
+    {% else %}
+    <a href="{% url 'accounts:account_login' %}">ログイン</a>
+    <a href="{% url 'accounts:account_create' %}">アカウント作成</a>
+    {% endif %}
+    <a href="{% url 'which_person_themes:home' %}">test</a>
+  </body>
+</html>

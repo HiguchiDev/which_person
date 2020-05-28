@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}どっち派？{% endblock title %}
+{% block content %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/which.css' %}">
+
+    {{ theme.id|json_script:"theme_id" }}
+    {{ user_id|json_script:"user_id" }}
+
+    <div id="comment_parts" hidden>{% static 'html_parts/comment.html' %}</div>
+    <div id="comment_delete_api" hidden>{% url 'which_person_themes:comment_cancel_api' %}</div>
+
+    <div class="row pt-5">
+        <div id="theme_name" class="col">
+            <h3>{{ theme.name }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="choice col-sm-6 pt-3 rounded-lg choice_pickup" id="choice_1">
+            <div class=choice_name>
+                {{ theme.choice1 | linebreaksbr }}
+            </div>
+            <span id="choice1_qty">
+                &nbsp;&nbsp;
+            </span>
+            人
+            <div class=vote_botton>
+                <button data-choice_num="1"
+                        data-href="{% url 'which_person_themes:voting_api' theme_id=theme.id choice_num=1 %}"
+                        class="voting_btn btn btn-primary btn-sm my-3">投票する
+                </button>
+            </div>
+
+        </div>
+        <div class="choice col-sm-6 pt-3 rounded-lg choice_pickup" id="choice_2">
+            <div class=choice>
+                {{ theme.choice2 | linebreaksbr }}
+            </div>
+            <span id="choice2_qty">
+                &nbsp;&nbsp;
+            </span>
+            人
+
+            <div class=vote_botton>
+                <button data-choice_num="2"
+                        data-href="{% url 'which_person_themes:voting_api' theme_id=theme.id choice_num=2 %}"
+                        class="voting_btn btn btn-primary btn-sm my-3">投票する
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <button class="btn btn-primary btn-sm my-3" id=vote_cancel_button>投票取り消し</button>
+    </div>
+
+    <div class="row">
+        <p id="voted_message"></p>
+    </div>
+
+
+    {% csrf_token %}
+
+    <div class="row mx-auto" id="comment_area">
+
+        <div class="col" id="comment_message">
+
+        </div>
+    </div>
+
+    <script src="{% static 'js/Voting.js' %}"></script>
+    <script src="{% static 'js/VotingButton.js' %}"></script>
+    <script src="{% static 'js/VoteCancelButton.js' %}"></script>
+    <script src="{% static 'js/Comment.js' %}"></script>
+
+    <footer class="fixed-bottom pb-5 pr-5">
+        <div class="row">
+            <div class="col">
+                <button id="comment_post_button" type="button" class="btn btn-primary rounded-pill js-modal-open"
+                        href="">
+                    コメントを書く
+                </button>
+            </div>
+            <div class="modal js-modal">
+                <div class="modal__bg js-modal-close"></div>
+                <div class="modal__content">
+                    <form name="comment_form" id="comment_form"
+                          action="{% url 'which_person_themes:comment_post_api' %}"
+                          method="POST">
+                        {% csrf_token %}
+                        <textarea required id="id_input_text" name="input_text" style="width:100%;height:100%"
+                                  rows="6"
+                                  placeholder="自分の投票した選択肢へのコメントをどうぞ"></textarea>
+                        <input type="hidden" type="text" name="theme_id" value={{ theme.id }}>
+                        <br>
+                        <input class="comment_btn" type="submit">
+                    </form>
+                    <a class="js-modal-close" href="">閉じる</a>
+                </div><!--modal__inner-->
+            </div><!--modal-->
+
+        </div>
+
+    </footer>
+
+
+
+{% endblock content %}

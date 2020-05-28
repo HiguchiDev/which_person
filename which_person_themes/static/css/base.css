@@ -1,0 +1,9 @@
+body {
+    background-color: #faffff;
+    display: none;
+}
+
+#title_block {
+    background-color: #e2efff;
+    color: #faffff;
+}
